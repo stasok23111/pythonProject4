@@ -1,6 +1,7 @@
 import sqlite3
 
 
+
 def get_result(query):
     """
 
@@ -16,6 +17,7 @@ def get_result(query):
 
             result.append(s)
         return result
+
 
 def get_one_query(query):
     """

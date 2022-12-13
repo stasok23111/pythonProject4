@@ -78,7 +78,7 @@ def get_rating(value):
 def get_by_genre(genre):
     query = f"""
             SELECT * FROM netflix
-            WHERE listed_in LIKE %{genre}%
+            WHERE listed_in LIKE '%{genre}%'
             ORDER BY date_added DESC
             LIMIT 10
             
@@ -95,6 +95,19 @@ def get_by_genre(genre):
     return jsonify(result)
 
 
+def get_type_of_work(type_of_work, release_year: int, genre):
+    with sqlite3.connect('netflix.db') as connection:
+        cursor = connection.cursor()
+        query = f"""
+                SELECT title, description FROM netflix
+                WHERE type = '{type_of_work}' AND release_year = {release_year} AND listed_in LIKE '%{genre}%'
+                ORDER BY date_added DESC
+                """
+        cursor.execute(query)
+
+
+
+        return cursor.fetchall()
 
 if __name__ == '__main__':
     app.run()
